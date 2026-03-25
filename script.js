@@ -28,3 +28,40 @@ function displayData(countries) {
     container.appendChild(card);
   });
 }
+
+
+function applyFilters(){
+  let result=[...allCountries];
+  const searchValue=document.getElementById("search").value.toLowerCase();
+  const regionValue=document.getElementById("regionFilter").value;
+  const sortValue=document.getElementById("sort").value;
+
+  //Search
+
+  result=result.filter(c=>c.name.common.toLowerCase().includes(searchValue));
+
+  //Filter
+
+  if (regionValue){
+    result = result.filter(c=>c.region===regionValue);
+
+  }
+
+  //sort
+
+  if (sortValue ==="population"){
+    result.sort((a,b)=>a.population - b.population);
+
+  }else if(sortValue ==="name"){
+    result.sort((a,b)=>a.name.common.localeCompare(b.name.common));
+  }
+
+  displayData(result);
+
+
+}
+
+document.getElementById("search").addEventListener("input", applyFilters);
+document.getElementById("regionFilter").addEventListener("change", applyFilters);
+document.getElementById("sort").addEventListener("change", applyFilters);
+
